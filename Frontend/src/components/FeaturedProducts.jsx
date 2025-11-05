@@ -1,238 +1,139 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { FiUpload, FiStar, FiShoppingCart, FiHeart } from 'react-icons/fi';
+import { useState } from 'react';
+import { motion } from 'motion/react';
+import { FiShoppingCart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 
-const FeaturedProducts = ({ images, onUploadClick }) => {
-  const [cart, setCart] = useState({});
-  const [favorites, setFavorites] = useState({});
+const products = [
+  {
+    id: 1,
+    name: 'Minimal Essence Dress',
+    category: 'Everyday',
+    price: 245,
+    image: 'https://images.unsplash.com/photo-1653875842174-429c1b467548?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsJTIwZmFzaGlvbiUyMGNsb3RoaW5nfGVufDF8fHx8MTc2MjI0MzIxMXww&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    id: 2,
+    name: 'Urban Comfort Set',
+    category: 'Casual',
+    price: 189,
+    image: 'https://images.unsplash.com/photo-1736555142217-916540c7f1b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXN1YWwlMjBtb2Rlcm4lMjBvdXRmaXR8ZW58MXx8fHwxNzYyMjYzNzg2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    id: 3,
+    name: 'Elegant Evening Gown',
+    category: 'Formal',
+    price: 425,
+    image: 'https://images.unsplash.com/photo-1759229874810-26aa9a3dda92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwZHJlc3MlMjBtaW5pbWFsaXN0fGVufDF8fHx8MTc2MjI2Mzc4Nnww&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+  {
+    id: 4,
+    name: 'Timeless Accessories',
+    category: 'Accessories',
+    price: 95,
+    image: 'https://images.unsplash.com/photo-1575201046471-082b5c1a1e79?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYXNoaW9uJTIwYWNjZXNzb3JpZXMlMjBsdXh1cnl8ZW58MXx8fHwxNzYyMjU0NDk1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+  },
+];
 
-  const categories = [
-    {
-      name: 'Casual',
-      path: '/shop/casual',
-      color: 'from-luxury-gold to-luxury-gold-light',
-      price: '$89',
-      rating: 4.8,
-      reviews: 234
-    },
-    {
-      name: 'Suits',
-      path: '/shop/suits',
-      color: 'from-luxury-charcoal to-luxury-charcoal-light',
-      price: '$299',
-      rating: 4.9,
-      reviews: 156
-    },
-    {
-      name: 'Accessories',
-      path: '/shop/accessories',
-      color: 'from-accent-earth to-accent-earth-light',
-      price: '$45',
-      rating: 4.7,
-      reviews: 89
-    },
-    {
-      name: 'Footwear',
-      path: '/shop/footwear',
-      color: 'from-accent-sage to-accent-sage-dark',
-      price: '$129',
-      rating: 4.6,
-      reviews: 178
-    }
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const handleAddToCart = (index) => {
-    setCart(prev => ({
-      ...prev,
-      [index]: (prev[index] || 0) + 1
-    }));
-  };
-
-  const handleToggleFavorite = (index) => {
-    setFavorites(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
-  };
-
-  const renderStars = (rating) => {
-    return [...Array(5)].map((_, i) => (
-      <FiStar
-        key={i}
-        className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-luxury-gold fill-current' : 'text-luxury-charcoal/30'}`}
-      />
-    ));
-  };
+export default function FeaturedProducts() {
+  const [hoveredId, setHoveredId] = useState(null);
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-3">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, #1a1a1a 1px, transparent 0)`,
-          backgroundSize: '60px 60px'
-        }}></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="py-24 bg-gray-100" id="new-arrivals">
+      <div className="container mx-auto px-6">
         <motion.div
-          className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          <motion.div
-            className="inline-block mb-4"
-            whileHover={{ scale: 1.05 }}
-          >
-            <span className="text-luxury-gold font-serif text-lg tracking-wider uppercase border-b-2 border-luxury-gold pb-2">
-              Featured Collection
-            </span>
-          </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold text-luxury-charcoal mb-6 font-serif">
-            Curated for Excellence
-          </h2>
-          <p className="text-xl text-luxury-charcoal/70 max-w-3xl mx-auto leading-relaxed">
-            Discover our handpicked selection of premium garments, each piece chosen for its exceptional quality,
-            timeless design, and unparalleled craftsmanship.
+          <p className="font-sans text-[var(--kenmoore-olive)] tracking-[0.3em] uppercase mb-4">
+            Trending Now
           </p>
+          <h2 className="font-serif text-[var(--kenmoore-charcoal)]" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
+            Featured Collection
+          </h2>
         </motion.div>
 
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 m-3-hover"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {categories.map((category, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.map((product, index) => (
             <motion.div
-              key={category.name}
-              variants={itemVariants}
-              className="relative group luxury-shadow-hover m-3-hover"
-              whileHover={{ y: -15, scale: 1.02 }}
+              key={product.id}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              onHoverStart={() => setHoveredId(product.id)}
+              onHoverEnd={() => setHoveredId(null)}
+              className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500"
             >
-              <div className="relative overflow-hidden rounded-2xl luxury-shadow">
-                <Link to={category.path} className="block">
-                  <div className={`h-80 relative ${
-                    images[index] ? '' : `bg-gradient-to-br ${category.color}`
-                  }`}>
-                    {images[index] ? (
-                      <motion.img
-                        src={images[index]}
-                        alt={category.name}
-                        className="w-full h-full object-cover"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.4 }}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-white text-2xl font-bold font-serif">{category.name}</span>
-                      </div>
-                    )}
-
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-luxury-charcoal/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                </Link>
-
-                {/* Action Buttons */}
-                <div className="absolute top-4 right-4 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <motion.button
-                    onClick={() => handleToggleFavorite(index)}
-                    className={`p-2 rounded-full ${favorites[index] ? 'bg-luxury-gold text-luxury-charcoal' : 'glass-effect text-white'} luxury-shadow-hover`}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <FiHeart className={`w-4 h-4 ${favorites[index] ? 'fill-current' : ''}`} />
-                  </motion.button>
-
-                  <motion.button
-                    onClick={() => onUploadClick(index)}
-                    className="p-2 rounded-full glass-effect text-white luxury-shadow-hover"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <FiUpload className="w-4 h-4" />
-                  </motion.button>
-                </div>
-
-                {/* Add to Cart Button */}
-                <motion.button
-                  onClick={() => handleAddToCart(index)}
-                  className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-luxury-gold text-luxury-charcoal px-6 py-3 rounded-full font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 luxury-shadow-hover flex items-center space-x-2"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ y: 20 }}
-                  whileInView={{ y: 0 }}
+              {/* Image Container */}
+              <div className="relative aspect-[3/4] overflow-hidden bg-[var(--kenmoore-beige)]">
+                <motion.div
+                  animate={hoveredId === product.id ? { scale: 1.1 } : { scale: 1 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full h-full"
                 >
-                  <FiShoppingCart className="w-4 h-4" />
-                  <span>Add to Cart</span>
-                  {cart[index] > 0 && (
-                    <span className="bg-luxury-charcoal text-luxury-gold text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                      {cart[index]}
-                    </span>
-                  )}
-                </motion.button>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+
+                {/* Overlay Actions */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={hoveredId === product.id ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 bg-gradient-to-t from-[var(--kenmoore-charcoal)]/60 via-transparent to-transparent flex items-end justify-center pb-6 gap-3"
+                >
+                  <motion.button
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={hoveredId === product.id ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+                    transition={{ delay: 0.1 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-white text-[var(--kenmoore-charcoal)] px-6 py-2 rounded-full flex items-center gap-2 shadow-lg hover:bg-[var(--kenmoore-olive)] hover:text-white transition-colors duration-300"
+                  >
+                    <FiShoppingCart size={16} />
+                    Add to Cart
+                  </motion.button>
+
+                  <motion.button
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={hoveredId === product.id ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+                    transition={{ delay: 0.15 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-white text-[var(--kenmoore-charcoal)] p-2 rounded-full shadow-lg hover:bg-[var(--kenmoore-gold)] transition-colors duration-300"
+                    aria-label="Add to wishlist"
+                  >
+                    <FaHeart size={16} />
+                  </motion.button>
+                </motion.div>
+
+                {/* Category Badge */}
+                <div className="absolute top-4 left-4">
+                  <span className="bg-[var(--kenmoore-beige)]/90 backdrop-blur-sm text-[var(--kenmoore-charcoal)] px-3 py-1 rounded-full text-sm font-sans">
+                    {product.category}
+                  </span>
+                </div>
               </div>
 
               {/* Product Info */}
-              <div className="mt-6 text-center">
-                <Link to={category.path}>
-                  <motion.h3
-                    className="text-xl font-semibold text-luxury-charcoal mb-2 font-serif"
-                    whileHover={{ color: '#D4AF37' }}
-                  >
-                    {category.name}
-                  </motion.h3>
-                </Link>
-
-                {/* Rating */}
-                <div className="flex items-center justify-center space-x-1 mb-2">
-                  {renderStars(category.rating)}
-                  <span className="text-luxury-charcoal/60 text-sm ml-2">
-                    ({category.reviews})
-                  </span>
-                </div>
-
-                {/* Price */}
-                <motion.p
-                  className="text-2xl font-bold text-luxury-gold font-serif"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  {category.price}
-                </motion.p>
+              <div className="p-5">
+                <h3 className="font-sans text-[var(--kenmoore-charcoal)] mb-2">
+                  {product.name}
+                </h3>
+                <p className="font-sans text-[var(--kenmoore-olive)]">
+                  ${product.price}
+                </p>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
-};
-
-export default FeaturedProducts;
+}

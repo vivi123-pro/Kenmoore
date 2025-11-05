@@ -59,7 +59,7 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      <Header onUploadClick={() => openUploadModal('hero')} />
+      <Header onUploadClick={() => openUploadModal('hero')} isLightBackground={true} />
 
       <Hero
         backgroundImage={images.hero}

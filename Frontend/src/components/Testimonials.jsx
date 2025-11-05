@@ -1,214 +1,113 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FaStar, FaQuoteLeft } from 'react-icons/fa';
-import { FiUpload } from 'react-icons/fi';
+import { motion } from 'motion/react';
+import { FaStar } from "react-icons/fa";
+import { FaQuoteRight } from "react-icons/fa6";
 
-const Testimonials = ({ images, onUploadClick }) => {
-  const testimonials = [
-    {
-      rating: 5,
-      text: "The fit, the feel — everything speaks confidence. I’ve never felt more myself in an outfit.",
-      author: "AERROA L.",
-      role: "Executive Director"
-    },
-    {
-      rating: 5,
-      text: "From boardroom days to evening events, every Kenmoore piece moves with ease and confidence. It’s more than fashion — it’s presence, perfected.",
-      author: "MICHAEL B.",
-      role: "Fashion Editor"
-    },
-    {
-      rating: 5,
-      text: "The moment I put it on, I felt different — composed, comfortable, completely me. Kenmoore doesn’t just dress you; it defines how you show up.",
-      author: "SARAH K.",
-      role: "Creative Director"
-    }
-  ];
+const testimonials = [
+  {
+    id: 1,
+    name: 'Sarah Mitchell',
+    role: 'Creative Director',
+    content: 'Kenmoore has completely transformed my wardrobe. Every piece feels like it was made just for me — elegant, comfortable, and timeless.',
+    rating: 5,
+    initials: 'SM',
+  },
+  {
+    id: 2,
+    name: 'James Chen',
+    role: 'Entrepreneur',
+    content: 'The quality is exceptional. I appreciate the attention to detail and the sustainable approach. These are pieces I will treasure for years.',
+    rating: 5,
+    initials: 'JC',
+  },
+  {
+    id: 3,
+    name: 'Emma Rodriguez',
+    role: 'Fashion Editor',
+    content: 'Finally, a brand that understands modern luxury. Kenmoore designs are sophisticated yet effortless — exactly what I have been looking for.',
+    rating: 5,
+    initials: 'ER',
+  },
+];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
+export default function Testimonials() {
   return (
-    <section className="py-20 bg-luxury-charcoal text-white relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, #D4AF37 2px, transparent 0)`,
-          backgroundSize: '50px 50px'
-        }}></div>
-      </div>
-
-      {/* Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+    <section className="py-24 bg-[#F5F5DC]">
+      <div className="container mx-auto px-6">
         <motion.div
-          className="absolute top-20 left-10 w-2 h-2 bg-luxury-gold rounded-full"
-          animate={{ y: [0, -20, 0], opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-32 right-16 w-1 h-1 bg-luxury-gold rounded-full"
-          animate={{ y: [0, 15, 0], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/4 w-1.5 h-1.5 bg-luxury-gold rounded-full"
-          animate={{ x: [0, 30, 0], opacity: [0.2, 0.8, 0.2] }}
-          transition={{ duration: 5, repeat: Infinity, delay: 2 }}
-        />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          <motion.div
-            className="inline-block mb-4"
-            whileHover={{ scale: 1.05 }}
-          >
-            <span className="text-luxury-gold font-serif text-lg tracking-wider uppercase border-b-2 border-luxury-gold pb-2">
-              Client Testimonials
-            </span>
-          </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 font-serif">
-            Voices of Distinction
-          </h2>
-          <p className="text-white/70 text-xl max-w-3xl mx-auto leading-relaxed">
-            Hear from our discerning clientele who have experienced the transformative power of exceptional craftsmanship.
+          <p className="font-sans text-[var(--kenmoore-olive)] tracking-[0.3em] uppercase mb-4">
+            Testimonials
           </p>
+          <h2 className="font-serif text-[var(--kenmoore-charcoal)]" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
+            What Our Clients Say
+          </h2>
         </motion.div>
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <motion.div
-              key={index}
-              variants={cardVariants}
-              className="glass-effect rounded-3xl p-8 border border-white/10 relative group luxury-shadow-hover"
-              whileHover={{
-                y: -15,
-                scale: 1.02,
-                backgroundColor: "rgba(255,255,255,0.15)"
-              }}
+              key={testimonial.id}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-500 relative"
             >
               {/* Quote Icon */}
               <motion.div
-                className="absolute -top-4 left-8"
-                whileHover={{ rotate: 5, scale: 1.1 }}
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + index * 0.1, type: 'spring' }}
+                className="absolute -top-4 left-8 p-4 mt-2 w-12 h-12 bg-[var(--kenmoore-olive)] rounded-full flex items-center justify-center text-black shadow-lg"
               >
-                <div className="w-12 h-12 bg-luxury-gold rounded-full flex items-center justify-center luxury-shadow">
-                  <FaQuoteLeft className="w-6 h-6 text-luxury-charcoal" />
-                </div>
+                <FaQuoteRight size={40} />
               </motion.div>
 
-              {/* Stars */}
-              <div className="flex mb-6 pt-4">
+              {/* Rating Stars */}
+              <div className="flex gap-1 mb-4 mt-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <motion.div
                     key={i}
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ delay: i * 0.1 + 0.2, type: "spring", stiffness: 200 }}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 + index * 0.1 + i * 0.05 }}
                   >
-                    <FaStar className="w-5 h-5 text-luxury-gold mr-1" />
+                    <FaStar size={16} fill="var(--kenmoore-gold)" stroke="var(--kenmoore-gold)" />
                   </motion.div>
                 ))}
               </div>
 
-              {/* Testimonial Text */}
-              <motion.p
-                className="text-lg mb-8 leading-relaxed text-white/90 italic"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                "{testimonial.text}"
-              </motion.p>
+              {/* Content */}
+              <p className="text-[var(--kenmoore-charcoal)]/80 mb-6 font-sans italic leading-relaxed">
+                "{testimonial.content}"
+              </p>
 
               {/* Author */}
-              <motion.div
-                className="border-t border-white/20 pt-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-              >
-                <p className="font-bold text-luxury-gold text-lg font-serif">
-                  {testimonial.author}
-                </p>
-                <p className="text-white/60 text-sm">
-                  {testimonial.role}
-                </p>
-              </motion.div>
-
-              {/* Upload Button */}
-              <motion.button
-                onClick={() => onUploadClick(index)}
-                className="absolute top-4 right-4 flex items-center space-x-1 glass-effect text-white px-3 py-2 rounded-lg hover:bg-white/20 transition-all opacity-0 group-hover:opacity-100 luxury-shadow"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <FiUpload className="w-4 h-4" />
-                <span className="text-sm">Photo</span>
-              </motion.button>
-
-              {/* Customer Image */}
-              <div className="mt-6 flex justify-center">
-                {images[index] ? (
-                  <motion.div
-                    className="relative"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    <img
-                      src={images[index]}
-                      alt={testimonial.author}
-                      className="w-16 h-16 rounded-full object-cover border-3 border-luxury-gold luxury-shadow"
-                    />
-                    <div className="absolute inset-0 rounded-full border-2 border-white/30"></div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    className="w-16 h-16 rounded-full bg-luxury-gold/20 flex items-center justify-center border-2 border-luxury-gold/50 luxury-shadow"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    <span className="text-luxury-gold text-sm font-bold">
-                      {testimonial.author.split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </motion.div>
-                )}
+              <div className="flex items-center gap-4">
+                <div>
+                  <h4 className="font-sans text-[var(--kenmoore-charcoal)]">
+                    {testimonial.initials} {testimonial.name}
+                  </h4>
+                  <p className="text-sm text-[var(--kenmoore-charcoal)]/60 font-sans">
+                    {testimonial.role}
+                  </p>
+                </div>
               </div>
+
+              {/* Decorative Border */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--kenmoore-taupe)] via-[var(--kenmoore-sage)] to-[var(--kenmoore-gold)] rounded-b-2xl" />
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
-};
-
-export default Testimonials;
+}

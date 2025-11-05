@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiUser, FiMapPin, FiCreditCard, FiPhone, FiMail } from 'react-icons/fi';
+import { FiUser, FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useCart } from '../context/CartContext';
@@ -21,13 +21,6 @@ const CheckoutPage = () => {
     city: '',
     state: '',
     zipCode: '',
-    cardNumber: '',
-    expiryDate: '',
-    cvv: '',
-    billingAddress: '',
-    billingCity: '',
-    billingState: '',
-    billingZipCode: '',
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -50,8 +43,7 @@ const CheckoutPage = () => {
 
     // Basic validation
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone ||
-        !formData.address || !formData.city || !formData.state || !formData.zipCode ||
-        !formData.cardNumber || !formData.expiryDate || !formData.cvv) {
+        !formData.address || !formData.city || !formData.state || !formData.zipCode) {
       setError('Please fill in all required fields');
       setIsLoading(false);
       return;
@@ -226,62 +218,7 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              {/* Payment Information */}
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                  <FiCreditCard className="w-5 h-5 mr-2 text-luxury-gold" />
-                  Payment Information
-                </h2>
-                <div className="space-y-4">
-                  <div>
-                    <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                      Card Number *
-                    </label>
-                    <input
-                      type="text"
-                      id="cardNumber"
-                      name="cardNumber"
-                      required
-                      placeholder="1234 5678 9012 3456"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-luxury-gold focus:border-luxury-gold"
-                      value={formData.cardNumber}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700 mb-1">
-                        Expiry Date *
-                      </label>
-                      <input
-                        type="text"
-                        id="expiryDate"
-                        name="expiryDate"
-                        required
-                        placeholder="MM/YY"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-luxury-gold focus:border-luxury-gold"
-                        value={formData.expiryDate}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="cvv" className="block text-sm font-medium text-gray-700 mb-1">
-                        CVV *
-                      </label>
-                      <input
-                        type="text"
-                        id="cvv"
-                        name="cvv"
-                        required
-                        placeholder="123"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-luxury-gold focus:border-luxury-gold"
-                        value={formData.cvv}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+
             </div>
 
             {/* Order Summary */}
@@ -309,7 +246,7 @@ const CheckoutPage = () => {
                 <div className="border-t pt-4">
                   <div className="flex justify-between items-center mb-4">
                     <span className="text-lg font-semibold text-gray-900">Total:</span>
-                    <span className="text-lg font-semibold text-luxury-gold">${totalPrice.toFixed(2)}</span>
+                    <span className="text-lg font-semibold text-luxur@y-gold">${totalPrice.toFixed(2)}</span>
                   </div>
                   {error && (
                     <motion.div

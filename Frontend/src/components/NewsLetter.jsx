@@ -17,7 +17,7 @@ const NewsLetter = () => {
   };
 
   return (
-    <section className="py-20 bg-luxury-cream relative overflow-hidden">
+    <section className="py-20 bg-gray-100 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
